@@ -1,14 +1,14 @@
 import './styles/theme.css';
 import './styles/global.css';
 import { Home } from './pages/Home';
-import { Container } from './components/Container';
+import {  TaskContextProvider } from './contexts/TaskContext';
 
 export function App() {
+
   return (
-    <>
-      <Container>
-        <Home />
-      </Container>
-    </>
+    //The provider is gonna to 'turn on' the context api
+    <TaskContextProvider>
+      <Home />
+    </TaskContextProvider>
   );
 }
