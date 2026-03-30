@@ -9,6 +9,7 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
+import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -41,9 +42,7 @@ export function MainForm() {
     const secondsRemaining = newTask.duration * 60;
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
     //Configuracao do nosso worker que vai configurar o relogio
-    const worker = new Worker(
-      new URL('../../workers/timerWorker.js', import.meta.url),
-    );
+   const worker = TimerWorkerManager.getInstance();
   }
   function handleInterruptTask(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
