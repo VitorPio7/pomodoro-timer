@@ -9,7 +9,8 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
-import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
+import { toast } from 'react-toastify';
+import { showMessage } from '../../adapters/showMessage';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -18,18 +19,21 @@ export function MainForm() {
 
   const nextCycle = getNextCycle(state.currentCycle);
 
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
+
   const nextCycleType = getNextCycleType(nextCycle);
 
   function handleCreateNewTask(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dismiss();
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
 
-    if (taskName.length === 0) {
-      alert('Digite uma tarefa válida');
-      return;
+    if (!taskName) {
+      toast.warn('Digite o nome da tarefa');
     }
+
     const newTask: TaskModel = {
       id: Date.now().toString(),
       name: taskName,
@@ -39,15 +43,15 @@ export function MainForm() {
       duration: 1,
       type: nextCycleType,
     };
-    const secondsRemaining = newTask.duration * 60;
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
     //Configuracao do nosso worker que vai configurar o relogio
-   const worker = TimerWorkerManager.getInstance();
+    showMessage.success('Tarefa iniciada');
+    showMessage.info('Duas');
   }
-  function handleInterruptTask(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) {
-    dispatch({ type: TaskActionTypes.INTERRUPT_TASK, payload: newTask });
+  function handleInterruptTask() {
+    showMessage.dismiss();
+    showMessage.info('Tarefa interrompida!');
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
   return (
     <form onSubmit={handleCreateNewTask} className='form' action=''>
@@ -59,6 +63,7 @@ export function MainForm() {
           type='text'
           ref={taskNameInput}
           disabled={!!state.activeTask}
+          defaultValue={lastTaskName}
         />
       </div>
       <div className='formRow'></div>

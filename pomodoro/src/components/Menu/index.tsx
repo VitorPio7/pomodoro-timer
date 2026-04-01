@@ -4,25 +4,25 @@ import {
   MoonIcon,
   SettingsIcon,
   SunIcon,
-  TimerIcon,
 } from 'lucide-react';
 import styles from './styles.module.css';
 
 import { useState, useEffect } from 'react';
+import { RouterLink } from '../RouterLink';
 
 type AvailableThemes = 'dark' | 'light';
 export function Menu() {
   const [theme, setTheme] = useState<AvailableThemes>(() => {
-  // Is going to get the current state in our storage
+    // Is going to get the current state in our storage
     const storageTheme =
       (localStorage.getItem('theme') as AvailableThemes) || 'dark';
     return storageTheme;
   });
 
   const nextThemeIcon = {
-    dark: <MoonIcon/>,
-    light: <SunIcon/>
-  }
+    dark: <MoonIcon />,
+    light: <SunIcon />,
+  };
 
   function handleThemeChange(evento: React.MouseEvent<HTMLAnchorElement>) {
     evento.preventDefault();
@@ -40,31 +40,31 @@ export function Menu() {
 
   return (
     <div className={styles.menu}>
-      <a
+      <RouterLink
         className={styles.menuLink}
         aria-label='Ir para a Home'
         title='Ir para a Home'
-        href='#'
+        href='/'
       >
         <HouseIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
         aria-label='Ir para o Histórico'
         title='Ir para o Histórico'
-        href='#'
+        href='/history'
       >
         <HistoryIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
         aria-label='Ir para as Configurações'
         title='Ir para as Configurações'
-        href='#'
+        href='/settings/'
       >
         <SettingsIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
         aria-label='Ir para o Modo Noturno'
         title='Ir para o Modo Noturno'
@@ -72,7 +72,7 @@ export function Menu() {
         onClick={handleThemeChange}
       >
         {nextThemeIcon[theme]}
-      </a>
+      </RouterLink>
     </div>
   );
 }
