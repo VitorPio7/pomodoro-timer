@@ -3,6 +3,7 @@ import { History } from '../../pages/History';
 import { AboutPomodoro } from '../../pages/AboutPomodoro';
 import { NotFound } from '../../pages/NotFound';
 import { useEffect } from 'react';
+import { Home } from '../../pages/';
 
 function ScrollToTop() {
   //It's going to take the current path
