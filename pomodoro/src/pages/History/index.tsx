@@ -9,12 +9,13 @@ import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { sortTasks, type SortTasksOptions } from '../../utils/sorttasks';
 import { useEffect, useState } from 'react';
-import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
-import { toast } from 'react-toastify';
+import { showMessage } from '../../adapters/showMessage';
+
 //This is the template to use in every single page, it's like a template that doesn't change
 
 export function History() {
   const { state, dispatch} = useTaskContext();
+  const [confirmClearHistory,setConfirmClearHistory] = useState(false)
   const hasTasks = state.tasks.length > 0;
   const [sortTasksOptions, setSortTaskOptions] = useState<SortTasksOptions>(
     () => {
@@ -35,6 +36,17 @@ export function History() {
       })
     }))
   },[state.tasks])
+  
+  useEffect(()=>{
+    if(!confirmClearHistory) return
+    console.log('APAGAR histórico')
+    setConfirmClearHistory(false)
+  },[confirmClearHistory])
+  useEffect(()=> {
+    return ()=> {
+      showMessage.dismiss();
+    }
+  },[])
   function handleSortTasks({ field }: Pick<SortTasksOptions, 'field'>) {
     const newDirection = sortTasksOptions.direction === 'desc'?'asc';
     setSortTaskOptions({
@@ -48,13 +60,10 @@ export function History() {
     });
   }
   function handleResetHistory(){
-     toast.dismiss();
-     toast('bla bla bla',{
-      autoClose:false,
-      closeOnClick:false,
-      closeButton: false,
-      draggable:false
-     })
+    showMessage.dismiss();
+   showMessage.confirm('Tem certeza?',(confirmation)=> {
+    setConfirmClearHistory(confirmation)
+   })
   }
   return (
     <MainTemplate>
