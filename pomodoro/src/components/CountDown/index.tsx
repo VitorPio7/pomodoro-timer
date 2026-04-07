@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 export function CountDown() {
   //Vai pegar o estado global indicado
-  const { state, setState } = useTaskContext();
+  const { state } = useTaskContext();
   return (
     <div className={styles.container}>{state.formattedSecondsRemaining}</div>
   );

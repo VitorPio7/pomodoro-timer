@@ -139,8 +139,8 @@ export function History() {
             </table>
           </div>
         )}
-        {hasTasks && (
-          <p style={{ textAlign: 'center' }}>
+        {!hasTasks && (
+          <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
             Ainda não existem tarefas criadas.
           </p>
         )}

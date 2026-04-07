@@ -39,7 +39,7 @@ export function Menu() {
   }, [theme]);
 
   return (
-    <div className={styles.menu}>
+    <nav className={styles.menu}>
       <RouterLink
         className={styles.menuLink}
         aria-label='Ir para a Home'
@@ -64,7 +64,7 @@ export function Menu() {
       >
         <SettingsIcon />
       </RouterLink>
-      <RouterLink
+      <a
         className={styles.menuLink}
         aria-label='Ir para o Modo Noturno'
         title='Ir para o Modo Noturno'
@@ -72,7 +72,7 @@ export function Menu() {
         onClick={handleThemeChange}
       >
         {nextThemeIcon[theme]}
-      </RouterLink>
-    </div>
+      </a>
+    </nav>
   );
 }

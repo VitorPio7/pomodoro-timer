@@ -11,7 +11,7 @@ import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 
 export function Settings() {
   useEffect(() => {
-    document.title = 'Settings';
+    document.title = 'Settings - pomodoro-timer';
   }, []);
 
   const { state, dispatch } = useTaskContext();
@@ -108,7 +108,7 @@ export function Settings() {
             <DefaultButton
               icon={<SaveIcon />}
               aria-label='Salvar configurações'
-              defaultValue={state.config.shortBreakTime}
+              title='Salvar configurações'
             />
           </div>
         </form>

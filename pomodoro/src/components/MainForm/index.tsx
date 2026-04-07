@@ -1,4 +1,4 @@
-import { PlayCircleIcon, StopCircle } from 'lucide-react';
+import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
 import { DefaultButton } from '../DefaultButton';
 import { Cycles } from '../Cycles';
 import { DefaultInput } from '../DefaultInput';
@@ -11,6 +11,7 @@ import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 import { toast } from 'react-toastify';
 import { showMessage } from '../../adapters/showMessage';
+import { Tips } from '../Tips';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -32,6 +33,7 @@ export function MainForm() {
 
     if (!taskName) {
       toast.warn('Digite o nome da tarefa');
+      return;
     }
 
     const newTask: TaskModel = {
@@ -40,17 +42,16 @@ export function MainForm() {
       startDate: Date.now(),
       completeDate: null,
       interruptDate: null,
-      duration: 1,
+      duration: state.config[nextCycleType],
       type: nextCycleType,
     };
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
     //Configuracao do nosso worker que vai configurar o relogio
     showMessage.success('Tarefa iniciada');
-    showMessage.info('Duas');
   }
   function handleInterruptTask() {
     showMessage.dismiss();
-    showMessage.info('Tarefa interrompida!');
+    showMessage.error('Tarefa interrompida!');
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
   return (
@@ -66,7 +67,9 @@ export function MainForm() {
           defaultValue={lastTaskName}
         />
       </div>
-      <div className='formRow'></div>
+      <div className='formRow'>
+        <Tips/>
+      </div>
       {state.currentCycle > 0 && (
         <div className='formRow'>
           <Cycles />
@@ -87,7 +90,7 @@ export function MainForm() {
             title='Parar tarefa atual'
             type='button'
             color='red'
-            icon={<StopCircle />}
+            icon={<StopCircleIcon />}
             onClick={handleInterruptTask}
           />
         )}
