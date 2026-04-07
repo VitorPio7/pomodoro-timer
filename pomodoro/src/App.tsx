@@ -9,7 +9,6 @@ export function App() {
     //React router doom is good to prevent re-render unecessarily components
     <TaskContextProvider>
       <MessagesContainer>
-        //Active the react router DOOM
         <MainRouter/>
       </MessagesContainer>
     </TaskContextProvider>

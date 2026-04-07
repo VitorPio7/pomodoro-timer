@@ -7,13 +7,14 @@ import { SaveIcon } from 'lucide-react';
 import { DefaultButton } from '../../components/DefaultButton';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { showMessage } from '../../adapters/showMessage';
+import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 
 export function Settings() {
   useEffect(() => {
     document.title = 'Settings';
   }, []);
 
-  const { state } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
 
   const workTimeInput = useRef<HTMLInputElement>(null);
 
@@ -29,6 +30,10 @@ export function Settings() {
     const longBreakTime = Number(longBreakTimeInput.current?.value);
     const formErrors = [];
 
+    useEffect(() => {
+      document.title = 'Página não encontrada';
+    }, []);
+
     if (isNaN(workTime) || isNaN(shortBreakTime) || isNaN(longBreakTime)) {
       formErrors.push('Por favor use apenas números para TODOS os campos');
     }
@@ -40,7 +45,7 @@ export function Settings() {
     }
 
     if (longBreakTime < 1 || longBreakTime > 60) {
-     formErrors.push('Digite valores entre 1 e 60 para descanso longo')
+      formErrors.push('Digite valores entre 1 e 60 para descanso longo');
     }
 
     if (formErrors.length > 0) {
@@ -49,7 +54,15 @@ export function Settings() {
       });
       return;
     }
-    console.log('SALVAR');
+    dispatch({
+      type: TaskActionTypes.CHANGE_SETTINGS,
+      payload: {
+        workTime,
+        shortBreakTime,
+        longBreakTime,
+      },
+    });
+    showMessage.success('Configurações salvas');
   }
 
   return (

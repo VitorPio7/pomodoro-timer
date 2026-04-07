@@ -1,7 +1,7 @@
 import type { TaskStateModel } from "../../models/TaskStateModel";
 
 // We are gonna to create a global context to evict prop drilling 
-export const initialState: TaskStateModel = {
+export const initialTaskState: TaskStateModel = {
   tasks: [],
   secondsRemaining: 0,
   formattedSecondsRemaining: '00:00',

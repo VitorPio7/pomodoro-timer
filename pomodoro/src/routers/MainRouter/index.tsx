@@ -3,7 +3,7 @@ import { History } from '../../pages/History';
 import { AboutPomodoro } from '../../pages/AboutPomodoro';
 import { NotFound } from '../../pages/NotFound';
 import { useEffect } from 'react';
-import { Home } from '../../pages/';
+import { Home } from '../../pages/Home';
 import { Settings } from '../../pages/Settings';
 
 function ScrollToTop() {
@@ -11,7 +11,7 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   //The page is going to the top every moment the pathname changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior:'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
   return null;
 }
@@ -25,6 +25,7 @@ export function MainRouter() {
         <Route path='/about-pomodoro/' element={<AboutPomodoro />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }
