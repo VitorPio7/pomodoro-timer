@@ -6,17 +6,20 @@
 .genericHtml h2 {
   font-size: 2.4rem;
   margin-bottom: 1.2rem;
+  
 }
 
 .genericHtml h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
+  text-align: start;
 }
 
 .genericHtml p {
   font-size: 1.6rem;
   line-height: 1.6;
   margin-bottom: 1.6rem;
+  text-align: start;
 }
 
 .genericHtml a {
@@ -31,10 +34,13 @@
 
 .genericHtml ul {
   padding-left: 2.4rem;
+  list-style-type: none;
+  text-align: start;
 }
 
 .genericHtml li {
   margin-bottom: 0.8rem;
+  text-align: start;
 }
 
 .genericHtml img {
